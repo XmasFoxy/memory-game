@@ -250,7 +250,13 @@ const readLeaderboard = () => {
 
 const addLeaderboardResult = () => {
   try {
-    const result = { moves, date: new Date().toISOString().slice(0, 10), timestamp: Date.now() };
+    const completedAt = new Date();
+    const date = [
+      completedAt.getFullYear(),
+      String(completedAt.getMonth() + 1).padStart(2, "0"),
+      String(completedAt.getDate()).padStart(2, "0"),
+    ].join("-");
+    const result = { moves, date, timestamp: completedAt.getTime() };
     const results = [...readLeaderboard(), result]
       .sort((first, second) => first.moves - second.moves || first.timestamp - second.timestamp)
       .slice(0, MAX_LEADERBOARD_ENTRIES);
